@@ -1,0 +1,37 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+	<mapper namespace="cafe.jjdev.mall.mapper.BoardFileMapper">
+		<insert id="insertBoardFile" parameterType="cafe.jjdev.mall.vo.BoardFile">
+			insert into board_file
+			(board_no
+			,board_file_origin_name
+			,board_file_save_name
+			,board_file_ext
+			,board_file_size
+			,board_file_type
+			)
+			values
+			(#{boardNo}
+			,#{boardFileOriginName}
+			,#{boardFileSaveName}
+			,#{boardFileExt}
+			,#{boardFileSize}
+			,#{boardFileType}
+			)			
+		</insert>
+		<select id="selectBoardFileByFK" resultType="cafe.jjdev.mall.vo.BoardFile" parameterType="int">
+		select		
+			board_file_save_name as boardFileSaveName
+			,board_file_ext as boardFileExt								
+		from board_file
+		where board_no = #{boardNo}
+		</select>
+		<delete id="deleteBoardFile" parameterType="int">
+			delete from board_file
+			where board_no = #{boardNo}
+		</delete>
+		
+		
+	</mapper>

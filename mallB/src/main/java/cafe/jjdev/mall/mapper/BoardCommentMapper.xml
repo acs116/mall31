@@ -1,0 +1,33 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="cafe.jjdev.mall.mapper.BoardCommentMapper">
+	<select id="selectBoardCommentListByBoardNo" resultType="cafe.jjdev.mall.vo.BoardComment" parameterType="int">
+		select
+			board_comment_no as boardCommentNo
+			,board_comment_content as boardCommentContent
+			,board_comment_user as boardCommentUser			
+		from board_comment
+		where board_no = #{boardNo}
+	</select>
+	<insert id="insertBoardComment" parameterType="cafe.jjdev.mall.vo.BoardComment">
+		insert into board_comment(
+			board_no
+			,board_comment_content
+			,board_comment_user
+			
+		) values(
+			#{boardNo}
+			,#{boardCommentContent}
+			,#{boardCommentUser}
+			
+		)
+	</insert>
+	<delete id="deleteBoardComment" parameterType="int">
+		DELETE FROM board_comment 
+        WHERE board_no = #{boardNo}         
+	</delete>
+	
+	
+</mapper>

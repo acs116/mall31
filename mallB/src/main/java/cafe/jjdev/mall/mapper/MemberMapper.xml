@@ -1,0 +1,106 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="cafe.jjdev.mall.mapper.MemberMapper">
+	<insert id="insertMemberOut" parameterType="cafe.jjdev.mall.vo.MemberOut">
+		insert into member_out
+		(
+		member_id
+		,member_date 
+		)
+		values (
+		#{memberId}
+		,now()
+		)
+		
+	</insert>
+	<select id="findPwMember" parameterType="cafe.jjdev.mall.vo.Member" resultType="cafe.jjdev.mall.vo.Member">
+		select
+		member_email as memberEmail
+		from member
+		where member_id = #{memberId}
+		and member_name = #{memberName}
+	</select>
+	<select id="newFindPwMember" parameterType="cafe.jjdev.mall.vo.Member" resultType="String">
+		select
+		member_pw as memberPw
+		from member
+		where member_id = #{memberId}
+		and member_name = #{memberName}
+	</select>
+	<select id="getAffirmationId" parameterType="String" resultType="cafe.jjdev.mall.vo.Member">
+		select
+		member_id as memberId
+		from member
+		where member_id = #{memberId}
+	</select>
+	<select id="getIdMember" parameterType="cafe.jjdev.mall.vo.Member" resultType="cafe.jjdev.mall.vo.Member">
+		select		
+		member_id as memberId
+		from member
+		where member_name = #{memberName}
+		and member_phone = #{memberPhone}
+	</select>
+	<delete id="removeAllMember" parameterType="cafe.jjdev.mall.vo.Member">
+		delete
+		from member
+		where
+		member_pw = #{memberPw}
+	</delete>
+	<update id="modifyAllMember" parameterType="cafe.jjdev.mall.vo.Member">
+		update member 
+            set            
+            member_name = #{memberName}
+            ,member_phone = #{memberPhone}
+            ,member_address = #{memberAddress}
+            ,member_gender = #{memberGender}
+            ,member_level = #{memberLevel}
+        where member_id = #{memberId}        
+	</update>	
+	<update id="modifyPwMember" parameterType="java.util.Map">
+		update member 
+            set member_pw = #{memberNewPw}
+        where member_id = #{memberId}
+        and member_pw = #{memberPw}
+	</update>	
+	<select id="selectGetMember" parameterType="String" resultType="cafe.jjdev.mall.vo.Member">
+		select
+			member_id as memberId
+			,member_name as memberName
+			,member_phone as memberPhone
+			,member_address as memberAddress
+			,member_gender as memberGender
+			,member_level as memberLevel
+		from member
+		where member_id = #{memberId}
+	</select>
+	<select id="getLoginMember" parameterType="cafe.jjdev.mall.vo.Member" resultType="cafe.jjdev.mall.vo.Member">
+		select 
+			member_id as memberId
+			,member_level as memberLevel
+		from member 
+		where member_id = #{memberId} 
+		and member_pw = #{memberPw}
+	</select>
+	<insert id="addAllMember" parameterType="cafe.jjdev.mall.vo.Member">
+		insert into member(
+            member_id
+            , member_pw
+            , member_name
+            , member_phone
+            , member_address
+			, member_gender
+			, member_level) 
+        values(
+            #{memberId}
+            , #{memberPw}
+            , #{memberName}
+            , #{memberPhone}
+            , #{memberAddress}
+            , #{memberGender}
+            , #{memberLevel}
+        )
+	</insert>
+	
+</mapper>

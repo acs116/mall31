@@ -1,0 +1,69 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="cafe.jjdev.mall.mapper.ProductCommonMapper">
+	<!-- 2 -->
+	<resultMap type="cafe.jjdev.mall.vo.ProductCommon" id="ProductCommonMap">
+		
+		<result column="product_common_no" property="productCommonNo"/>
+        <result column="category_no" property="categoryNo"/>
+        <result column="product_common_name" property="productCommonName"/>
+        <result column="product_common_price" property="productCommonPrice"/>
+        <result column="product_common_description" property="productCommonDescription"/> 
+        <result column="product_common_date" property="productCommonDate"/>  
+        
+        <collection property="products" ofType="cafe.jjdev.mall.vo.Product">
+        	<!-- primary키 -->
+        	<id column="product_no" property="productNo"/>
+            <result column="product_common_no" property="productCommonNo"/>
+            <result column="product_color" property="productColor"/>
+            <result column="product_size" property="productSize"/>
+            <result column="product_stock" property="productStock"/>          
+        </collection>
+
+	</resultMap>
+	
+	<select id="selectProductListByCategory" parameterType="int" resultMap="ProductCommonMap">
+		select 
+			pc.product_common_no 
+			,pc.category_no 
+			,pc.product_common_name 
+			,pc.product_common_price
+			,pc.product_common_description
+			,pc.product_common_date
+			,p.product_no
+			,p.product_common_no
+			,p.product_color
+			,p.product_size
+			,p.product_stock
+		from product_common pc 
+		inner join product p
+		on pc.product_common_no = p.product_common_no
+	</select>
+	
+	<!-- 1 페이징, 검색(이름)-->
+	<select id="selectProductCommonList" parameterType="java.util.Map" resultType="cafe.jjdev.mall.vo.ProductCommon">
+		select
+			product_common_no as productCommonNo
+			,category_no as categoryNo
+			,product_common_name as productCommonName
+			,product_common_price as productCommonPrice
+			,product_common_description as productCommonDescription
+			,product_common_date as productCommonDate
+		from product_common
+		where category_no = #{categoryNo}
+			
+		<if test="searchWord != '%%'">
+			and product_common_name like #{searchWord}
+  		</if>
+  		
+		ORDER BY product_common_date DESC
+		limit #{startRow}, #{rowPerPage}
+		
+	</select>
+	
+	<select id="selectProductCommonCount" resultType="int">
+        SELECT COUNT(*) FROM product_common
+    </select>
+</mapper>
