@@ -40,6 +40,8 @@
 		from product_common pc 
 		inner join product p
 		on pc.product_common_no = p.product_common_no
+		where pc.product_common_no = #{productCommonNo}
+		
 	</select>
 	
 	<!-- 1 페이징, 검색(이름)-->
@@ -62,8 +64,13 @@
 		limit #{startRow}, #{rowPerPage}
 		
 	</select>
-	
-	<select id="selectProductCommonCount" resultType="int">
+		
+	<select id="selectProductCommonCount" parameterType="java.util.Map"
+											resultType="int">
         SELECT COUNT(*) FROM product_common
+        where category_no = #{categoryNo}			
+		<if test="searchWord != '%%'">
+			and product_common_name like #{searchWord}
+  		</if>
     </select>
 </mapper>

@@ -22,12 +22,13 @@ public class ProductCommonController {
 			@RequestParam(value="categoryNo", required = true) int categoryNo
 			,@RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage
 			,@RequestParam(value="searchWord", defaultValue = "")String searchWord) {
-		System.out.println(currentPage+"currentPage");
+		System.out.println(searchWord+"ProductCommonController.java searchWord");
 		Map<String, Object> map = productCommonService.getProductCommonList(categoryNo, currentPage, searchWord);
 	model.addAttribute("list", map.get("list"));
 	model.addAttribute("currentPage", currentPage);
 	model.addAttribute("categoryNo", categoryNo);
 	model.addAttribute("searchWord", searchWord);
+	System.out.println("ProductCommonController.java searchWord : " + searchWord);
 	model.addAttribute("lastPage", map.get("lastPage"));
 	model.addAttribute("countProductCommon", map.get("countProductCommon"));
 	
@@ -35,6 +36,14 @@ public class ProductCommonController {
 		
 		return "/product/selectProductCommonList";
 	}
-	
+	@GetMapping(value="/product/getProductListByCategory")
+	public String getProductListByCategory(Model model, int productCommonNo) {
+		System.out.println("productCommonNo" + productCommonNo);
+		ProductCommon productCommon = productCommonService.getProductListByCategory(productCommonNo);
+			
+		model.addAttribute("productCommon", productCommon);
+		System.out.println("productCommon getProductListByCategory" + productCommon);
+		return "/product/getProductListByCategory";
+	}
 	
 }

@@ -25,11 +25,15 @@ public class ProductCommonService {
 		map.put("rowPerPage", ROW_PER_PAGE);
 		map.put("categoryNo", categoryNo);
 		map.put("searchWord", "%"+searchWord+"%");
-		
-		
+				
 		List<ProductCommon> list = productCommonMapper.selectProductCommonList(map);
 		System.out.println(list+"BoardCommentService.java list");
-		int countProductCommon = productCommonMapper.selectProductCommonCount();
+				
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		parameterMap.put("categoryNo", categoryNo);
+		parameterMap.put("searchWord", "%"+searchWord+"%");
+		
+		int countProductCommon = productCommonMapper.selectProductCommonCount(parameterMap);
 		int lastPage = countProductCommon/ROW_PER_PAGE;
 		if(countProductCommon%ROW_PER_PAGE != 0) {
 			lastPage++;
@@ -41,6 +45,11 @@ public class ProductCommonService {
 		returnMap.put("currentPage", currentPage);
 		returnMap.put("countProductCommon", countProductCommon);
 		return returnMap;
+	}
+	public ProductCommon getProductListByCategory(int productCommonNo) {
+		System.out.println("getProductListByCategory ProductCommonService productCommonNo"+ productCommonNo);
+		System.out.println("getProductListByCategory ProductCommonService productCommonNo"+ productCommonMapper.selectProductListByCategory(productCommonNo));
+		return productCommonMapper.selectProductListByCategory(productCommonNo);
 	}
 
 }

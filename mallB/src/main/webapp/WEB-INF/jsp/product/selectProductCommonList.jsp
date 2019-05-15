@@ -40,18 +40,20 @@ $(document).ready(function(){
                 <th>productCommonName</th>
                 <th>productCommonPrice</th>
                 <th>productCommonDescription</th>
-                <th>productCommonDate</th>               
+                <th>productCommonDate</th> 
+                            
             </tr>
         </thead>
         <tbody>
             <c:forEach var="list" items="${list}">
                 <tr>
-                    <td>${list.productCommonNo}</td>
+                    <td><a href="${pageContext.request.contextPath }/product/getProductListByCategory?productCommonNo=${list.productCommonNo}">${list.productCommonNo}</a></td>
                     <td>${list.categoryNo}</td>
                     <td>${list.productCommonName}</td>
                     <td>${list.productCommonPrice}</td>
                     <td>${list.productCommonDescription}</td>
                     <td>${list.productCommonDate}</td>
+                    
                 </tr>
             </c:forEach>
         </tbody>
@@ -65,18 +67,23 @@ $(document).ready(function(){
     </form>
     <div>
     <!-- 이전 다음 /product/getProductListByCategory?categoryNo&currentPage -->
-    </div>
+    
     
     <ul class="pager">
         <c:if test="${currentPage > 1}">
-            <li class="previous"><a href="/product/selectProductCommonList?categoryNo=${categoryNo}&currentPage=${currentPage-1}">이전</a></li>
+            
+            <li class="previous"><a href="/product/selectProductCommonList?categoryNo=${categoryNo}&currentPage=${currentPage-1}&searchWord=${searchWord}">이전</a></li>
+            
+           
         </c:if>
+		      
         <c:if test="${currentPage < lastPage}">
-            <li class="next"><a href="/product/selectProductCommonList?categoryNo=${categoryNo}&currentPage=${currentPage+1}">다음</a></li>
+            <li class="previous"><a href="/product/selectProductCommonList?categoryNo=${categoryNo}&currentPage=${currentPage+1}&searchWord=${searchWord}">다음</a></li>       
         </c:if>
     </ul>
+    </div>
     <div>
-        <%-- <a class="btn btn-default" href="${pageContext.request.contextPath}/board/addBoard">게시글 입력</a> --%>
+        <a class="btn btn-default" href="${pageContext.request.contextPath}/">처음으로</a> 
     </div>
 </div>
 </body>
