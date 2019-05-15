@@ -59,8 +59,8 @@
             		<td>${p.productStock}</td>
             	</tr>
             </c:forEach>
-       
     		</table>
+       
     		
     <a class="btn btn-default" href="${pageContext.request.contextPath}/product/selectProductCommonList?categoryNo=${productCommon.categoryNo}">전에</a> 
     
